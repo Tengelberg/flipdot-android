@@ -1,4 +1,4 @@
-package liebe.flipdot;
+package display.flipdot;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

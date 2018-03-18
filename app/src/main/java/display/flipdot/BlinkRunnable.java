@@ -1,4 +1,4 @@
-package liebe.flipdot;
+package display.flipdot;
 
 import com.google.android.things.pio.Gpio;
 
