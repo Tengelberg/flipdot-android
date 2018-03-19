@@ -1,5 +1,7 @@
 package display.flipdot;
 
+import android.util.Log;
+
 import com.google.android.things.pio.Gpio;
 
 import java.io.IOException;
@@ -12,6 +14,14 @@ import java.util.Arrays;
 public class DisplayController {
 
 
+    private boolean[] toBitArray(int n) {
+        boolean[] bits = new boolean[7];
+        for (int i = 6; i >= 0; i--) {
+            bits[i] = (n & (1 << i)) != 0;
+        }
+        return bits;
+    }
+
 
     public void setLineDataToPins(Boolean lineData[], Gpio lineGpios[]) {
 
@@ -22,15 +32,8 @@ public class DisplayController {
         multipled Pins to select the right column.
      */
     public void setColumnDataToPins(Gpio columnSelectorGpios[], int column) {
-
-        int input = column;
-
-        boolean[] bits = new boolean[7];
-        for (int i = 6; i >= 0; i--) {
-            bits[i] = (input & (1 << i)) != 0;
-        }
-
-        System.out.println(input + " = " + Arrays.toString(bits));
+        boolean bits[] = this.toBitArray(column);
+        Log.w("INFO" , column + " = " + Arrays.toString(bits));
     }
 
     /*
