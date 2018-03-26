@@ -6,6 +6,7 @@ import com.google.android.things.pio.Gpio;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Created by Tobias Engelberg on 18.03.18.
@@ -13,6 +14,8 @@ import java.util.Arrays;
 
 public class DisplayController {
 
+    public final boolean FLIP_BLACK = false;
+    public final boolean FLIP_YELLOW = true;
 
     private boolean[] toBitArray(int n) {
         boolean[] bits = new boolean[7];
@@ -23,8 +26,21 @@ public class DisplayController {
     }
 
 
-    public void setLineDataToPins(Boolean lineData[], Gpio lineGpios[]) {
+    public void setRow(Gpio rowSelectorGpios[], int column, boolean flipToYellow) {
+        boolean bits[] = this.toBitArray(column);
+        //Set Pins to encoded signal
+        this.setGpio(rowSelectorGpios[0], bits[0]);
+        this.setGpio(rowSelectorGpios[1], bits[1]);
+        this.setGpio(rowSelectorGpios[2], bits[2]);
+        this.setGpio(rowSelectorGpios[3], bits[3]);
+        this.setGpio(rowSelectorGpios[4], !bits[4]);
+        this.setGpio(rowSelectorGpios[5], bits[4]);
 
+        /* Log.w("INFO" , column + " = " + Arrays.toString(bits));
+        for(int i = 0; i < 6; i++) {
+            Log.w("INFO", "SET "+ i + " to " + bits[i]);
+            this.setGpio(rowSelectorGpios[i], bits[i]);
+        }*/
     }
 
     /*
